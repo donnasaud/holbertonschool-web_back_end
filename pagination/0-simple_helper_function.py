@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
-"""Simple helper for pagination: compute start/end indices for a page."""
-from typing import Tuple
+""" Learning Pagination"""
 
 
-def index_range(page: int, page_size: int) -> Tuple[int, int]:
+def index_range(page: int, page_size: int) -> tuple:
     """
-    Return a tuple (start_index, end_index) for the given page parameters.
+    In this method we will calculate the start index and end index
+    to reach a specific page with a limited page size.
 
-    Page numbers are 1-indexed.
-    Example:
-        page=1, page_size=7  -> (0, 7)
-        page=3, page_size=15 -> (30, 45)
+    Args:
+        page (int): the page number we want to reach (starting from 1).
+        page_size (int): the size of each page.
+
+    Returns:
+        tuple: combination of the start_index and the end_index.
+
+    Formula:
+        n: (number of page)
+        p: (page size)
+        start_index = (n-1) * p
+        end_index = n * p
     """
-    start = (page - 1) * page_size
-    end = page * page_size
-    return (start, end)
-
+    start_index = (page - 1) * page_size
+    end_index = page * page_size
+    return (start_index, end_index)
