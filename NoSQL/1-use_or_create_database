@@ -1,0 +1,2 @@
+// writing a script uses or creates a database with my_db
+use my_db
