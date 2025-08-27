@@ -1,2 +1,2 @@
-// writing a script uses or creates a database with my_db
+// List all collections in the selected database
 use my_db
