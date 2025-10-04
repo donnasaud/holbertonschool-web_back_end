@@ -4,38 +4,37 @@ function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
-        reject(new Error('Cannot load the database'));
+        reject(Error('Cannot load the database'));
         return;
       }
 
-      // Split file into lines and remove empty lines
-      const lines = data.trim().split('\n').filter((line) => line.length > 0);
+      const lines = data.toString().split('\n').filter((line) => line.trim() !== '');
+      const students = lines.map((line) => line.split(','));
 
-      // Remove header row
-      const students = lines.slice(1);
-
-      console.log(`Number of students: ${students.length}`);
+      const response = [];
+      const totalStudents = students.length > 1 ? students.length - 1 : 0;
+      const totalMsg = `Number of students: ${totalStudents}`;
+      console.log(totalMsg);
+      response.push(totalMsg);
 
       const fields = {};
 
-      // Process each line
-      for (const line of students) {
-        const [firstname, lastname, age, field] = line.split(',');
-        if (!fields[field]) {
-          fields[field] = [];
-        }
-        fields[field].push(firstname);
+      // Skip header row
+      for (const student of students.slice(1)) {
+        const [firstName, , , field] = student;
+        if (!fields[field]) fields[field] = [];
+        fields[field].push(firstName);
       }
 
-      // Print results for each field
       for (const [field, names] of Object.entries(fields)) {
-        console.log(`Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`);
+        const msg = `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`;
+        console.log(msg);
+        response.push(msg);
       }
 
-      resolve();
+      resolve(response);
     });
   });
 }
 
 module.exports = countStudents;
-
