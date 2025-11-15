@@ -1,13 +1,11 @@
-
 #!/usr/bin/env python3
-
-# Duck typing - first element of a sequence
-
+"""Module containing safe first element function."""
 from typing import Any, Sequence, Optional
 
 
 def safe_first_element(lst: Sequence[Any]) -> Optional[Any]:
-    # Return the first element of a sequence if it exists, else None
+    """Safe first element function."""
     if lst:
         return lst[0]
-    return None
+    else:
+        return None
